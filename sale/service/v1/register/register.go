@@ -13,7 +13,7 @@ type Query struct{
 	Db *sql.DB
 }
 // Member table
-type member struct {
+type Member struct {
 	Email     string `json:"email"`
 	UserID    string `json:"user_id"`
 	UserName  string `json:"username"`
@@ -22,16 +22,16 @@ type member struct {
 }
 //Register email
 func (q Query) Register(c *gin.Context) {
-	sqlStr := "INSERT INTO member VALUES($1, $2, $3, $4)"
-    var m member
-	err := c.BindJSON(&m)
+	sqlStr := "INSERT INTO Member VALUES($1, $2, $3, $4)"
+    var member Member
+	err := c.BindJSON(&member)
 	if err != nil {
 		fmt.Println(err)
 		c.String(http.StatusBadRequest, err.Error())
 		return 
 	}
-	//fmt.Printf("%+v",member)
-	_, err = q.Db.Exec(sqlStr, m.Email,m.UserID,m.UserName,m.Address)
+	fmt.Printf("%+v",member)
+	_, err = q.Db.Exec(sqlStr, member.Email,member.UserID,member.UserName,member.Address)
 	if err != nil {
 		fmt.Println(err)
 		c.String(http.StatusBadRequest, err.Error())
