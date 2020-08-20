@@ -1,4 +1,4 @@
-module github.com/chayupon/sale/cmd
+module github.com/chayupon/sale
 
 go 1.14
 

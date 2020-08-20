@@ -20,7 +20,7 @@ type member struct {
 	Address   string `json:"address"`
 	
 }
-//register email
+//Register email
 func (q Query) Register(c *gin.Context) {
 	sqlStr := "INSERT INTO member VALUES($1, $2, $3, $4)"
     var m member
@@ -41,7 +41,7 @@ func (q Query) Register(c *gin.Context) {
 		"status" :"OK",
 	})
 }
-//Get (Select database)
+//ListMember select query
 func (q Query) ListMember(c *gin.Context) {
 	sqlStr := `SELECT "UserName" FROM member`
 	rows, err := q.Db.Query(sqlStr)
