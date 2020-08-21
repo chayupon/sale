@@ -8,6 +8,7 @@ import (
 	"github.com/chayupon/sale/service/v1/handle"
 	_ "github.com/lib/pq"
 )
+
 func main() {
 	//connect database
 	const (
