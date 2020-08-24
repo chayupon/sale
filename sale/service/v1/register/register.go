@@ -38,8 +38,13 @@ func (q Query) Register(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{
-		"status" :"OK",
+		"member is :" : member,
 	})
+}
+
+type user []struct {
+	Username string `json:"username"`
+	
 }
 //ListMember select query
 func (q Query) ListMember(c *gin.Context) {
@@ -51,6 +56,9 @@ func (q Query) ListMember(c *gin.Context) {
 		return
 		}
     defer rows.Close()
+   
+	//fmt.Printf("%+v",u)
+	
 	for rows.Next() {
 		var username string
 		if err := rows.Scan(&username); err != nil {
@@ -58,8 +66,22 @@ func (q Query) ListMember(c *gin.Context) {
 		}
 		c.JSON(http.StatusOK, gin.H{
 			"username": username,
-		})
-	
-    }
+	 })
+	//	u :=make(user,0)
+	//	fmt.Println(username)
+		
+	//	for i :=0;i<=len(u);i++{
+	//		c.JSON(http.StatusOK,u)
+	//	}
+		
+		//c.JSON(http.StatusOK,u)
+		//c.JSON(http.StatusOK, gin.H{
+		//	"username": username,
+		//})
+		}
+		
 }
+
+
+
 
