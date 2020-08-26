@@ -44,7 +44,7 @@ func (q Query) Register(c *gin.Context) {
 	})
 }
 //User slice
-type User struct{
+type user struct{
 	UserName  string `json:"username"`
 }
 
@@ -58,14 +58,14 @@ func (q Query) ListMember(c *gin.Context) {
 		return
 		}
 	defer rows.Close()
-	u :=[]User{}
+	u :=[]user{}
 	//fmt.Printf("%+v",u)
 	for rows.Next() {
 		//var username string
 		if err := rows.Scan(&username); err != nil {
 			log.Println(err)
 		}
-		use :=User{
+		use :=user{
 			UserName : username,
 
 		}
