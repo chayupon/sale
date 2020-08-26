@@ -77,8 +77,6 @@ func (q Query) ListMember(c *gin.Context) {
 	output,_:=json.Marshal(&u)
 	fmt.Println(string(output))
 	c.JSON(http.StatusOK,u)
-		
-		
 }
 
 
