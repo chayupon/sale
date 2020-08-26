@@ -15,18 +15,16 @@ services:
         dockerfile: Dockerfile
     ports:
       - "8081:8080"
-    environment: 
-     - DB_DSN=postgres://postgres:mysecretpassword@db:5432/sale?sslmode=disable
   db:
+  # image: postgres:12.4-alpine
     networks:
-      - shared-network
-    # image: postgres:12.4-alpine
+    - shared-network
     build:
       context: .
-      dockerfile: pg.dockerfile
+      dockerfile: tk.dockerfile
     restart: always
     environment:
-      - POSTGRES_PASSWORD=mysecretpassword
+      - POSTGRES_PASSWORD=tonkla727426
       - POSTGRES_USER=postgres
       - POSTGRES_MULTIPLE_DATABASES=sale
     ports:

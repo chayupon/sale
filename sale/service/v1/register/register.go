@@ -1,9 +1,11 @@
 package register
 
 import (
+	"encoding/json"
 	"database/sql"
 	"fmt"
 	"net/http"
+	"log"
 
 	"github.com/gin-gonic/gin"
 	
@@ -41,44 +43,41 @@ func (q Query) Register(c *gin.Context) {
 		"member is :" : member,
 	})
 }
-
-type user []struct {
-	Username string `json:"username"`
-	
+//User slice
+type User struct{
+	UserName  string `json:"username"`
 }
+
 //ListMember select query
 func (q Query) ListMember(c *gin.Context) {
+	var username string
 	sqlStr := `SELECT "UserName" FROM member`
 	rows, err := q.Db.Query(sqlStr)
 	if err != nil {
-		fmt.Println("FAIL")
-		c.String(http.StatusBadRequest, err.Error())
+		log.Println("Fail")
 		return
 		}
-    defer rows.Close()
-   
+	defer rows.Close()
+	u :=[]User{}
 	//fmt.Printf("%+v",u)
-	
 	for rows.Next() {
-		var username string
+		//var username string
 		if err := rows.Scan(&username); err != nil {
-			fmt.Println(err)
+			log.Println(err)
 		}
-		c.JSON(http.StatusOK, gin.H{
-			"username": username,
-	 })
-	//	u :=make(user,0)
-	//	fmt.Println(username)
-		
-	//	for i :=0;i<=len(u);i++{
-	//		c.JSON(http.StatusOK,u)
-	//	}
-		
-		//c.JSON(http.StatusOK,u)
-		//c.JSON(http.StatusOK, gin.H{
-		//	"username": username,
-		//})
+		use :=User{
+			UserName : username,
+
 		}
+		u = append(u,use)
+	}
+	if !rows.NextResultSet() {
+		log.Println(rows.Err())
+	}
+	output,_:=json.Marshal(&u)
+	fmt.Println(string(output))
+	c.JSON(http.StatusOK,u)
+		
 		
 }
 
